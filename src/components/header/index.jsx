@@ -1,50 +1,24 @@
 // src/components/header/index.jsx
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { FiCheckCircle, FiGitBranch, FiMoon, FiSun, FiTool } from "react-icons/fi";
 import { Styled } from "./styled";
-import transparentLogo from "/images/transparentLogo.png";
-import {
-    FiMoon,
-    FiSun,
-    FiGitBranch,
-    FiCheckCircle,
-    FiTool,
-} from "react-icons/fi";
 
 const Header = () => {
-    const [logoLoaded, setLogoLoaded] = useState(false);
-    const [theme, setTheme] = useState("dark");
+    const [theme, setTheme] = useState(() => localStorage.getItem("app-theme") || "dark");
 
-    // Init theme from localStorage or default
+
     useEffect(() => {
-        const storedTheme = localStorage.getItem("app-theme");
-        const initialTheme = storedTheme || "dark";
-        setTheme(initialTheme);
-
-        if (initialTheme === "light") {
-            document.documentElement.setAttribute("data-theme", "light");
-        } else {
-            document.documentElement.removeAttribute("data-theme");
-        }
-    }, []);
-
-    // Apply theme + persist
-    useEffect(() => {
-        if (theme === "light") {
-            document.documentElement.setAttribute("data-theme", "light");
-        } else {
-            document.documentElement.removeAttribute("data-theme");
-        }
-
+        document.documentElement.toggleAttribute(
+            "data-theme",
+            theme === "light",
+        );
         localStorage.setItem("app-theme", theme);
     }, [theme]);
 
-    const nextTheme = useMemo(() => {
-        return theme === "light" ? "dark" : "light";
-    }, [theme]);
-
-    const handleToggle = () => {
-        setTheme(nextTheme);
-    };
+    const nextTheme = useMemo(
+        () => (theme === "light" ? "dark" : "light"),
+        [theme],
+    );
 
     return (
         <Styled.Wrapper>
@@ -52,12 +26,9 @@ const Header = () => {
                 <div className="leftSide">
                     <div className="logoNameWrapper">
                         <div className="logoWrapper">
-                            {!logoLoaded && <div className="logoSkeleton" />}
                             <img
-                                src={transparentLogo}
-                                alt="software-engineering-core-notes"
-                                onLoad={() => setLogoLoaded(true)}
-                                style={{ opacity: logoLoaded ? 1 : 0 }}
+                                src={import.meta.env.BASE_URL + "logo.png"}
+                                alt="Software engineering core notes"
                             />
                         </div>
 
@@ -78,14 +49,12 @@ const Header = () => {
                             </span>
                             <span className="sText">Workflow</span>
                         </span>
-
                         <span className="stat">
                             <span className="sIcon">
                                 <FiCheckCircle />
                             </span>
                             <span className="sText">Quality</span>
                         </span>
-
                         <span className="stat">
                             <span className="sIcon">
                                 <FiTool />
@@ -99,9 +68,13 @@ const Header = () => {
                     <button
                         type="button"
                         className="themeToggleBtn"
-                        onClick={handleToggle}
-                        aria-label={`Switch to ${nextTheme} theme`}
-                        title={`Switch to ${nextTheme}`}
+                        onClick={() =>
+                            setTheme((currentTheme) =>
+                                currentTheme === "light" ? "dark" : "light",
+                            )
+                        }
+                        aria-label={"Switch to " + nextTheme + " theme"}
+                        title={"Switch to " + nextTheme}
                     >
                         <span className="icon">
                             {theme === "light" ? <FiMoon /> : <FiSun />}
