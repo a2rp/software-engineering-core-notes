@@ -1,5 +1,6 @@
 // App.jsx
 import React from "react";
+import GoToTop from "./components/goToTop";
 import { Styled } from "./App.styled";
 import Header from "./components/header";
 import Footer from "./components/footer";
@@ -25,12 +26,13 @@ import EthicsAndProfessionalPractice from "./topics/ethicsAndProfessionalPractic
 import AgileDeepDive from "./topics/agileDeepDive";
 
 const App = () => {
+    const mainRef = React.useRef(null);
     return (
         <Styled.Wrapper>
             <Styled.Header>
                 <Header />
             </Styled.Header>
-            <Styled.Main>
+            <Styled.Main ref={mainRef}>
                 <div className="contentWrapper">
                     <AboutSoftwareEngineering />
 
@@ -59,6 +61,7 @@ const App = () => {
                     <Footer />
                 </div>
             </Styled.Main>
+            <GoToTop scrollContainerRef={mainRef} />
         </Styled.Wrapper>
     );
 };

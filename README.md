@@ -7,7 +7,7 @@ A focused React reference for revising software engineering fundamentals, delive
 - Structured topic sections for quick revision
 - Practical notes on SDLC, requirements, design, version control, testing, DevOps, and more
 - Dark and light themes with local preference storage
-- Responsive layout with keyboard-friendly controls
+- Responsive layout with keyboard-friendly controls and a floating go-to-top button
 - Local project assets and a GitHub Pages deployment
 
 ## Tech stack
