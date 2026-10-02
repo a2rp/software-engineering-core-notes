@@ -1,5 +1,7 @@
 # Software Engineering Core Notes
 
+![Software Engineering Core Notes preview](screenshot.png)
+
 A focused React reference for revising software engineering fundamentals, delivery practices, quality, testing, architecture, security, and maintenance.
 
 ## Features
